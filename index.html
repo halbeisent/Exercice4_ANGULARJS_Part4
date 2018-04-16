@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr" ng-app="app">
+  <head>
+    <meta charset="utf-8" />
+    <title>Exercice 4 ANGULARJS Partie 4</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  </head>
+  <body>
+    <div ng-controller="carCtrl">
+      <ul>
+        <li ng-repeat="car in voiture | filter: {couleur: '!verte'}">
+          {{car.marque + " " + car.couleur}}
+        </li>
+      </ul>
+    </div>
+  </body>
+  <script>
+  var app = angular.module('app',[]);
+  //Définition du controller + appel des fonctions $scope et $http
+  app.controller('carCtrl',function($scope, $http){
+    //On récupère le fichier JSON (A noter, apparemment firefox & chrome n'aiment pas quand on utilise $http.get pour un fichier local)
+    $http.get('voiture.json')
+    //ensuite, nous éxécutons la fonction suivante
+    .then(function(car){
+    //Nous remplissons par la même occasion le $scope.voiture
+    $scope.voiture = car.data
+  });
+  });
+  </script>
+</html>
